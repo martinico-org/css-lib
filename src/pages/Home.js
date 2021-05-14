@@ -47,6 +47,5 @@ const HomeContent = styled.div`
 
 const LogoApp = styled.img`
   height: 90%;
-  width: 100%;
   object-fit: contain;
 `
