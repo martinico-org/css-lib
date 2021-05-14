@@ -1,7 +1,10 @@
 import React from 'react'
+import {Home} from './pages/Home'
 
 const App = () => {
-  return <div> CSS LIB  </div>
+  return <>
+    <Home/>
+  </>
 }
 
 export default App
