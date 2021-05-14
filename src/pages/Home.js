@@ -2,18 +2,9 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Tag } from '../components/Tag'
 import { TagContainer } from '../components/TagContainer'
-import { getItems } from '../helpers/scraper'
 
 export const Home = () => {
-  const launch = async () => {
-    const res = await getItems()
-    console.log(res)
-  }
-
-  React.useEffect(() => {
-    launch()
-  }, [])
-
+  console.log('HELLO')
   return (
     <WrapperPage>
       <WrapperLogo>
