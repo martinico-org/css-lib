@@ -15,6 +15,30 @@ export const Home = () => {
                 <Tag label="Culture"/>
                 <Tag label="Culture"/>
                 <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
             </TagContainer>
         </HomeContent>
     </WrapperPage>

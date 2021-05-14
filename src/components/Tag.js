@@ -20,6 +20,7 @@ const WrapperTag = styled.div`
   flex-direction: row;
   transition: all 300ms ease-in-out;
   will-change: transform;
+  margin: 15px;
   &:hover {
     cursor: pointer;
     transform: scale(1.05);

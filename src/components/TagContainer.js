@@ -10,7 +10,8 @@ export const TagContainer = ({children}) => {
 
 const WrapperTagContainer = styled.div`
   width: 100%;
-  padding: 20px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 `
