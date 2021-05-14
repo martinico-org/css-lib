@@ -1,11 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export const TagContainer = ({children}) => {
-
-    return <WrapperTagContainer>
-        {children}
-    </WrapperTagContainer>
+export const TagContainer = ({ children }) => {
+  return <WrapperTagContainer>{children}</WrapperTagContainer>
 }
 
 const WrapperTagContainer = styled.div`
