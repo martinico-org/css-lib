@@ -15,6 +15,30 @@ export const Home = () => {
                 <Tag label="Culture"/>
                 <Tag label="Culture"/>
                 <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
+                <Tag label="Culture"/>
             </TagContainer>
         </HomeContent>
     </WrapperPage>
@@ -47,6 +71,5 @@ const HomeContent = styled.div`
 
 const LogoApp = styled.img`
   height: 90%;
-  width: 100%;
   object-fit: contain;
 `
