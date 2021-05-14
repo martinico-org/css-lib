@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export const TagContainer = ({ children }) => {
-  return <WrapperTagContainer>{children}</WrapperTagContainer>
-}
+export const TagContainer = ({ children }) => (
+  <WrapperTagContainer>{children}</WrapperTagContainer>
+)
 
 const WrapperTagContainer = styled.div`
   width: 100%;
@@ -12,3 +12,5 @@ const WrapperTagContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
 `
+
+export default TagContainer

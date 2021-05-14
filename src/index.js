@@ -1,6 +1,3 @@
-import 'core-js'
-import 'regenerator-runtime'
-import 'whatwg-fetch'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'

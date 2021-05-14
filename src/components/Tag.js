@@ -1,17 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { colors } from '../utils/colors'
+import colors from '../utils/colors'
 
-export const Tag = ({ label, onClick }) => {
-  return (
-    <WrapperTag onClick={onClick}>
-      <TagContent>
-        <TagLogo src={require('../assets/app/tag.svg')} alt="Tag logo" />
-        <Label>{label}</Label>
-      </TagContent>
-    </WrapperTag>
-  )
-}
+export const Tag = ({ label, onClick }) => (
+  <WrapperTag onClick={onClick}>
+    <TagContent>
+      <TagLogo src="assets/app/tag.svg" alt="Tag logo" />
+      <Label>{label}</Label>
+    </TagContent>
+  </WrapperTag>
+)
 
 const WrapperTag = styled.div`
   width: fit-content;
@@ -48,3 +46,5 @@ const TagLogo = styled.img`
   object-fit: contain;
   margin-right: 5px;
 `
+
+export default Tag

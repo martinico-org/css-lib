@@ -3,47 +3,45 @@ import styled from '@emotion/styled'
 import { Tag } from '../components/Tag'
 import { TagContainer } from '../components/TagContainer'
 
-export const Home = () => {
-  return (
-    <WrapperPage>
-      <WrapperLogo>
-        <LogoApp src={require('../assets/app/logo.png')} alt="logo app" />
-      </WrapperLogo>
-      <HomeContent>
-        <TagContainer>
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-        </TagContainer>
-      </HomeContent>
-    </WrapperPage>
-  )
-}
+export const Home = () => (
+  <WrapperPage>
+    <WrapperLogo>
+      <LogoApp src="assets/app/logo.png" alt="logo app" />
+    </WrapperLogo>
+    <HomeContent>
+      <TagContainer>
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+      </TagContainer>
+    </HomeContent>
+  </WrapperPage>
+)
 
 export const WrapperPage = styled.div`
   position: absolute;
