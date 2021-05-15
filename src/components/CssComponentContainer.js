@@ -15,7 +15,7 @@ const CssComponentContainer = () => {
       {!!height &&
         components.map((comp, index) => {
           const size = height / 4
-          const scaleValue = (size / 1920).toFixed(2)
+          const scaleValue = size / 1920
           return (
             <WrapperComp key={`${index}CompCSS`} size={height / 4}>
               <IFrame
@@ -60,7 +60,7 @@ const IFrame = styled.iframe`
 const WrapperComp = styled.div`
   position: relative;
   width: ${(props) => `${props.size}px`};
-  height: ${(props) => `${props.size / 1.77}px`};
+  height: ${(props) => `${props.size / 1.7777778}px`};
   background-color: ${colors.grey};
   overflow: hidden;
   border-radius: 5px;
