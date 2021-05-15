@@ -4,3 +4,4 @@ coverage
 .storybook
 README.md
 package.json
+master.json
