@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css as emotionCss, Global } from '@emotion/core'
 import parse from 'html-react-parser'
-import { useLocation } from '@reach/router'
+import { navigate, useLocation } from '@reach/router'
 import { parse as queryParser } from 'query-string'
 import Toggle from '../components/Toggle'
 import Switch from '../components/Switch'
@@ -14,6 +14,7 @@ const RenderElement = ({ id }) => {
   const location = useLocation()
   const searchParams = queryParser(location.search)
   const fullScreen = searchParams?.fullscreen || null
+  const inApp = searchParams?.inApp || null
   const [toggle, setToggle] = React.useState(true)
   const [linesSwitch, setLinesSwitch] = React.useState(false)
   const { html, css } = cssComponents[id]
@@ -29,6 +30,24 @@ const RenderElement = ({ id }) => {
 
   return (
     <WrapperPage>
+      {!fullScreen && (
+        <WrapperToggle top={25} left={25}>
+          <BackButton
+            src="./assets/app/arrow.svg"
+            alt="back button"
+            onClick={() => navigate(`/`)}
+          />
+        </WrapperToggle>
+      )}
+      {inApp && (
+        <WrapperToggle top={25} right={25}>
+          <CloseButton
+            src="./assets/app/close.svg"
+            alt="back button"
+            onClick={() => navigate(`${id}`)}
+          />
+        </WrapperToggle>
+      )}
       <Global
         styles={emotionCss`
           ${css}
@@ -36,6 +55,15 @@ const RenderElement = ({ id }) => {
       />
       <WrapperElement fullScreen={fullScreen}>
         <WrapperAnim fullScreen={fullScreen}>{htmlParsed}</WrapperAnim>
+        {!fullScreen && (
+          <WrapperToggle bottom={20} right={20}>
+            <FullscreenButton
+              src="./assets/app/fullscreen.svg"
+              alt="fullscreen"
+              onClick={() => navigate(`${id}?fullscreen=true&inApp=true`)}
+            />
+          </WrapperToggle>
+        )}
       </WrapperElement>
       {!fullScreen && (
         <WrapperElement>
@@ -67,10 +95,44 @@ const RenderElement = ({ id }) => {
   )
 }
 
+const FullscreenButton = styled.img`
+  width: 30px;
+  height: 30px;
+  transition: all 300ms ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`
+
+const BackButton = styled.img`
+  width: 40px;
+  height: 40px;
+  transform: rotate(-90deg);
+  transition: all 300ms ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1) rotate(-90deg);
+  }
+`
+
+const CloseButton = styled.img`
+  width: 40px;
+  height: 40px;
+  transition: all 300ms ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`
+
 const WrapperToggle = styled.div`
   position: absolute;
-  top: ${(props) => `${props.top}px`};
-  right: ${(props) => `${props.right}px`};
+  top: ${(props) => (props.bottom ? 'unset' : `${props.top}px`)};
+  bottom: ${(props) => (props.top ? 'unset' : `${props.bottom}px`)};
+  right: ${(props) => (props.left ? 'unset' : `${props.right}px`)};
+  left: ${(props) => (props.right ? 'unset' : `${props.left}px`)};
+  z-index: 1;
 `
 
 const WrapperPage = styled.div`
@@ -84,6 +146,7 @@ const WrapperPage = styled.div`
 `
 
 const WrapperElement = styled.div`
+  position: relative;
   width: ${(props) => (props?.fullScreen ? '100%' : '50%')};
   height: 100%;
   display: flex;
