@@ -26,7 +26,11 @@ const CssComponentContainer = () => {
           const scaleValue = (size / 1920).toFixed(2)
           const compLoaded = cssCompsLoads.includes(comp?.id)
           return (
-            <WrapperComp key={`${index}CompCSS`} size={height / 4}>
+            <WrapperComp
+              key={`${index}CompCSS`}
+              load={compLoaded}
+              size={height / 4}
+            >
               {!compLoaded && (
                 <CompLoader src="./assets/app/loader.svg" alt="loader comp" />
               )}
@@ -100,7 +104,8 @@ const WrapperComp = styled.div`
   position: relative;
   width: ${(props) => `${props.size}px`};
   height: ${(props) => `${props.size / 1.7777778}px`};
-  background-color: ${colors.grey};
+  background-color: ${(props) =>
+    props?.load ? 'transparent' : colors.greySuperLight};
   overflow: hidden;
   border-radius: 5px;
   transition: all 300ms ease-in-out;
