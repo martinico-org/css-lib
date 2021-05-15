@@ -5,6 +5,7 @@ const colors = {
   grey: '#DCDCDC',
   green: '#03fc88',
   red: '#fc034a',
+  purpleBlue: 'rgba(70, 50, 168)',
 }
 
 export default colors

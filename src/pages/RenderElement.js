@@ -2,16 +2,21 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css as emotionCss, Global } from '@emotion/core'
 import parse from 'html-react-parser'
+import { useLocation } from '@reach/router'
+import { parse as queryParser } from 'query-string'
 import Toggle from '../components/Toggle'
 import Switch from '../components/Switch'
 import CodeRenderer from '../components/CodeRenderer'
 
-const master = require('../cssfiles/master.json')
+const cssComponents = require('../master.json')
 
 const RenderElement = ({ id }) => {
+  const location = useLocation()
+  const searchParams = queryParser(location.search)
+  const fullScreen = searchParams?.fullscreen || null
   const [toggle, setToggle] = React.useState(true)
   const [linesSwitch, setLinesSwitch] = React.useState(false)
-  const { html, css } = master[id]
+  const { html, css } = cssComponents[id]
   const htmlParsed = parse(html)
 
   const handleToggle = () => {
@@ -29,33 +34,35 @@ const RenderElement = ({ id }) => {
           ${css}
         `}
       />
-      <WrapperElement>
-        <WrapperAnim>{htmlParsed}</WrapperAnim>
+      <WrapperElement fullScreen={fullScreen}>
+        <WrapperAnim fullScreen={fullScreen}>{htmlParsed}</WrapperAnim>
       </WrapperElement>
-      <WrapperElement>
-        <WrapperSyntax>
-          <WrapperToggle top={20} right={40}>
-            <Toggle
-              labels={['HTML', 'CSS']}
-              onClick={handleToggle}
-              toggleValue={toggle}
+      {!fullScreen && (
+        <WrapperElement>
+          <WrapperSyntax>
+            <WrapperToggle top={20} right={40}>
+              <Toggle
+                labels={['HTML', 'CSS']}
+                onClick={handleToggle}
+                toggleValue={toggle}
+              />
+            </WrapperToggle>
+            <WrapperToggle top={70} right={40}>
+              <Switch
+                onClick={handleSwitch}
+                switchValue={linesSwitch}
+                label="Lines"
+              />
+            </WrapperToggle>
+            <CodeRenderer
+              html={html}
+              css={css}
+              toggle={toggle}
+              linesSwitch={linesSwitch}
             />
-          </WrapperToggle>
-          <WrapperToggle top={70} right={40}>
-            <Switch
-              onClick={handleSwitch}
-              switchValue={linesSwitch}
-              label="Lines"
-            />
-          </WrapperToggle>
-          <CodeRenderer
-            html={html}
-            css={css}
-            toggle={toggle}
-            linesSwitch={linesSwitch}
-          />
-        </WrapperSyntax>
-      </WrapperElement>
+          </WrapperSyntax>
+        </WrapperElement>
+      )}
     </WrapperPage>
   )
 }
@@ -77,16 +84,16 @@ const WrapperPage = styled.div`
 `
 
 const WrapperElement = styled.div`
-  width: 50%;
+  width: ${(props) => (props?.fullScreen ? '100%' : '50%')};
   height: 100%;
   display: flex;
   flex-direction: column;
 `
 
 const WrapperAnim = styled.div`
-  margin: 10px 5px 10px 10px;
+  margin: ${(props) => (props?.fullScreen ? '0' : '10px 5px 10px 10px')};
   height: 100%;
-  border-radius: 5px;
+  border-radius: ${(props) => (props?.fullScreen ? '0' : '5px')};
   overflow: hidden;
 `
 

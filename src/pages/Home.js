@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import Tag from '../components/Tag'
 import TagContainer from '../components/TagContainer'
 import CssComponentContainer from '../components/CssComponentContainer'
+import colors from '../utils/colors'
 
 export const Home = () => (
   <WrapperPage>
@@ -29,6 +30,7 @@ export const WrapperPage = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${colors.purpleBlue};
 `
 
 const WrapperLogo = styled.div`
