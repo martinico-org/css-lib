@@ -4,6 +4,7 @@ import { css as emotionCss, Global } from '@emotion/core'
 import parse from 'html-react-parser'
 import { navigate, useLocation } from '@reach/router'
 import { parse as queryParser } from 'query-string'
+import { NotAvailable } from './NotAvailable'
 import Toggle from '../components/Toggle'
 import Switch from '../components/Switch'
 import CodeRenderer from '../components/CodeRenderer'
@@ -17,8 +18,11 @@ const RenderElement = ({ id }) => {
   const inApp = searchParams?.inApp || null
   const [toggle, setToggle] = React.useState(true)
   const [linesSwitch, setLinesSwitch] = React.useState(false)
-  const { html, css } = cssComponents[id]
-  const htmlParsed = parse(html)
+  const [content, setContent] = React.useState({
+    html: null,
+    css: null,
+    htmlParsed: null,
+  })
 
   const handleToggle = () => {
     setToggle((e) => !e)
@@ -28,72 +32,90 @@ const RenderElement = ({ id }) => {
     setLinesSwitch((e) => !e)
   }
 
+  React.useEffect(() => {
+    if (Object.prototype.hasOwnProperty.call(cssComponents, id)) {
+      setContent({
+        html: cssComponents[id].html,
+        css: cssComponents[id].css,
+        htmlParsed: parse(cssComponents[id].html),
+      })
+    }
+  }, [])
+
   return (
-    <WrapperPage>
-      {!fullScreen && (
-        <WrapperToggle top={25} left={25}>
-          <BackButton
-            src="/assets/app/arrow.svg"
-            alt="back button"
-            onClick={() => navigate(`/`)}
-          />
-        </WrapperToggle>
-      )}
-      {inApp && (
-        <WrapperToggle top={25} right={25}>
-          <CloseButton
-            src="/assets/app/close.svg"
-            alt="back button"
-            onClick={() => navigate(`/viewer/${id}`)}
-          />
-        </WrapperToggle>
-      )}
-      <Global
-        styles={emotionCss`
-          ${css}
+    <>
+      {content.html ? (
+        <WrapperPage>
+          {!fullScreen && (
+            <WrapperToggle top={25} left={25}>
+              <BackButton
+                src="/assets/app/arrow.svg"
+                alt="back button"
+                onClick={() => navigate(`/`)}
+              />
+            </WrapperToggle>
+          )}
+          {inApp && (
+            <WrapperToggle top={25} right={25}>
+              <CloseButton
+                src="/assets/app/close.svg"
+                alt="back button"
+                onClick={() => navigate(`/viewer/${id}`)}
+              />
+            </WrapperToggle>
+          )}
+          <Global
+            styles={emotionCss`
+          ${content.css}
         `}
-      />
-      <WrapperElement fullScreen={fullScreen}>
-        <WrapperAnim fullScreen={fullScreen}>{htmlParsed}</WrapperAnim>
-        {!fullScreen && (
-          <WrapperToggle bottom={20} right={20}>
-            <FullscreenButton
-              src="/assets/app/fullscreen.svg"
-              alt="fullscreen"
-              onClick={() =>
-                navigate(`/viewer/${id}?fullscreen=true&inApp=true`)
-              }
-            />
-          </WrapperToggle>
-        )}
-      </WrapperElement>
-      {!fullScreen && (
-        <WrapperElement>
-          <WrapperSyntax>
-            <WrapperToggle top={20} right={40}>
-              <Toggle
-                labels={['HTML', 'CSS']}
-                onClick={handleToggle}
-                toggleValue={toggle}
-              />
-            </WrapperToggle>
-            <WrapperToggle top={70} right={40}>
-              <Switch
-                onClick={handleSwitch}
-                switchValue={linesSwitch}
-                label="Lines"
-              />
-            </WrapperToggle>
-            <CodeRenderer
-              html={html}
-              css={css}
-              toggle={toggle}
-              linesSwitch={linesSwitch}
-            />
-          </WrapperSyntax>
-        </WrapperElement>
+          />
+          <WrapperElement fullScreen={fullScreen}>
+            <WrapperAnim fullScreen={fullScreen}>
+              {content.htmlParsed}
+            </WrapperAnim>
+            {!fullScreen && (
+              <WrapperToggle bottom={20} right={20}>
+                <FullscreenButton
+                  src="/assets/app/fullscreen.svg"
+                  alt="fullscreen"
+                  onClick={() =>
+                    navigate(`/viewer/${id}?fullscreen=true&inApp=true`)
+                  }
+                />
+              </WrapperToggle>
+            )}
+          </WrapperElement>
+          {!fullScreen && (
+            <WrapperElement>
+              <WrapperSyntax>
+                <WrapperToggle top={20} right={40}>
+                  <Toggle
+                    labels={['HTML', 'CSS']}
+                    onClick={handleToggle}
+                    toggleValue={toggle}
+                  />
+                </WrapperToggle>
+                <WrapperToggle top={70} right={40}>
+                  <Switch
+                    onClick={handleSwitch}
+                    switchValue={linesSwitch}
+                    label="Lines"
+                  />
+                </WrapperToggle>
+                <CodeRenderer
+                  html={content.html}
+                  css={content.css}
+                  toggle={toggle}
+                  linesSwitch={linesSwitch}
+                />
+              </WrapperSyntax>
+            </WrapperElement>
+          )}
+        </WrapperPage>
+      ) : (
+        <NotAvailable />
       )}
-    </WrapperPage>
+    </>
   )
 }
 

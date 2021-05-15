@@ -41,7 +41,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: ${(props) => (props.left ? `flex-end` : 'flex-start')};
-  padding: ${(props) => (props.left ? `0 20px 0 0` : '0 0 0 20px')};
+  padding: ${(props) => (props.left ? `0 15px 0 0` : '0 0 0 15px')};
   flex-direction: column;
 `
 
