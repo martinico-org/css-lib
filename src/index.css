@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+
 html {
   height: 100%;
 }
 
 body {
+  font-family: 'Squada One', cursive;
   height: 100%;
   margin: 0;
 }

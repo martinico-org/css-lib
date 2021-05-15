@@ -3,25 +3,23 @@ import styled from '@emotion/styled'
 import colors from '../utils/colors'
 
 const Toggle = ({ labels, onClick, toggleValue }) => {
+  const [maxItemWidth, setMaxItemWidth] = React.useState(null)
   const refs = {
     0: React.useRef(null),
     1: React.useRef(null),
   }
 
-  const maxItemWidth = React.useMemo(() => {
-    const firstItem = refs?.['0']?.current
-    const secondItem = refs?.['1']?.current
-    if (!firstItem || !secondItem) return null
-    return Math.max(
-      firstItem.getBoundingClientRect().width,
-      secondItem?.getBoundingClientRect().width
-    )
-  }, [refs?.['0']?.current, refs?.['1']?.current])
+  React.useEffect(() => {
+    if (!refs[0].current || !refs[1].current) return
+    const firstItem = refs?.[0].current?.getBoundingClientRect()?.width
+    const secondItem = refs?.[1].current?.getBoundingClientRect()?.width
+    setMaxItemWidth(Math.max(firstItem, secondItem))
+  }, [refs[0].current, refs[1].current])
 
   return (
     <WrapperToggle displayed={maxItemWidth}>
       <ContainerToggle onClick={onClick}>
-        {maxItemWidth && <LabelActive translate={toggleValue} />}
+        {!!maxItemWidth && <LabelActive translate={toggleValue} />}
         {labels.map((label, index) => (
           <LabelContainer
             width={maxItemWidth}
@@ -42,7 +40,7 @@ const WrapperToggle = styled.div`
   width: fit-content;
   flex-direction: row;
   transition: all 300ms ease-in-out;
-  opacity: ${(props) => props?.display};
+  opacity: ${(props) => (props?.displayed ? 1 : 0)};
   cursor: pointer;
   user-select: none;
 `
@@ -56,7 +54,7 @@ const ContainerToggle = styled.div`
   display: flex;
 `
 const LabelContainer = styled.span`
-  width: ${(props) => props?.width && `${props.width}px`};
+  width: ${(props) => (props?.width ? `${props.width}px` : 'unset')};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,6 +65,7 @@ const LabelContainer = styled.span`
   margin: 0 15px;
   z-index: 1;
   transition: all 300ms ease-in-out;
+
   &:hover {
     color: ${colors.classicBlack};
   }

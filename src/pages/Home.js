@@ -1,50 +1,25 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Tag } from '../components/Tag'
-import { TagContainer } from '../components/TagContainer'
+import Tag from '../components/Tag'
+import TagContainer from '../components/TagContainer'
+import CssComponentContainer from '../components/CssComponentContainer'
 
-export const Home = () => {
-  console.log('HELLO')
-  return (
-    <WrapperPage>
-      <WrapperLogo>
-        <LogoApp src="assets/app/logo.png" alt="logo app" />
-      </WrapperLogo>
-      <HomeContent>
-        <TagContainer>
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-          <Tag label="Culture" />
-        </TagContainer>
-      </HomeContent>
-    </WrapperPage>
-  )
-}
+export const Home = () => (
+  <WrapperPage>
+    <WrapperLogo>
+      <LogoApp src="assets/app/logo.png" alt="logo app" />
+    </WrapperLogo>
+    <HomeContent>
+      <TagContainer>
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+        <Tag label="Culture" />
+      </TagContainer>
+      <CssComponentContainer />
+    </HomeContent>
+  </WrapperPage>
+)
 
 export const WrapperPage = styled.div`
   position: absolute;

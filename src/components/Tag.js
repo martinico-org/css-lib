@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import colors from '../utils/colors'
 
-export const Tag = ({ label, onClick }) => (
+const Tag = ({ label, onClick }) => (
   <WrapperTag onClick={onClick}>
     <TagContent>
       <TagLogo src="assets/app/tag.svg" alt="Tag logo" />

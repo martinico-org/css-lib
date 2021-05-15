@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export const TagContainer = ({ children }) => (
+const TagContainer = ({ children }) => (
   <WrapperTagContainer>{children}</WrapperTagContainer>
 )
 
