@@ -22,7 +22,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format-ci": "prettier --check ."
+    "format-ci": "prettier --check .",
+    "scrape": "python3 scraper/scraper.py"
   },
   "eslintConfig": {
     "extends": "react-app"
