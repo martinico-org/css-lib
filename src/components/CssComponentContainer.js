@@ -5,12 +5,10 @@ import { keyframes } from '@emotion/core'
 import colors from '../utils/colors'
 import useScreenDimensions from '../hooks/useScreenDimensions'
 import URL from '../utils/const'
+import Tag from './Tag'
 
-const cssComponents = require('../master.json')
-
-const CssComponentContainer = () => {
-  const { height } = useScreenDimensions()
-  const components = Object.values(cssComponents || {})
+const CssComponentContainer = ({ comps, selectedCategories }) => {
+  const { width } = useScreenDimensions()
   const [cssCompsLoads, setCssCompsLoads] = React.useState([])
 
   const handleOnLoad = (event, id) => {
@@ -18,18 +16,37 @@ const CssComponentContainer = () => {
     setCssCompsLoads((e) => [...e, id])
   }
 
+  React.useEffect(() => {
+    if (!selectedCategories.length) return
+    const newCssCompsLoads = comps.reduce(
+      (acc, v) => {
+        if (!selectedCategories.includes(v?.category)) {
+          acc = [...acc].filter((e) => e !== v?.id) // eslint-disable-line no-param-reassign
+        }
+        return acc
+      },
+      [...cssCompsLoads]
+    )
+    setCssCompsLoads(newCssCompsLoads)
+  }, [selectedCategories])
+
   return (
     <WrapperCssComponentContainer>
-      {!!height &&
-        components.map((comp, index) => {
-          const size = height / 4
+      {!!width &&
+        comps.map((comp, index) => {
+          if (
+            selectedCategories.length &&
+            !selectedCategories.includes(comp.category)
+          )
+            return null
+          const size = width / 4
           const scaleValue = size / 1920
           const compLoaded = cssCompsLoads.includes(comp?.id)
           return (
             <WrapperComp
               key={`${index}CompCSS`}
               load={compLoaded}
-              size={height / 4}
+              size={width / 4}
             >
               {!compLoaded && (
                 <CompLoader src="/assets/app/loader.svg" alt="loader comp" />
@@ -46,7 +63,24 @@ const CssComponentContainer = () => {
               />
               <OverlayClickable
                 onClick={() => navigate(`/viewer/${comp?.id}`)}
-              />
+                canDisplayedTags={compLoaded}
+              >
+                <TagsIndicators displayed={compLoaded}>
+                  {comp.tags.map((tag, i) => {
+                    if (i >= 4) return null
+                    return (
+                      <Tag
+                        key={`${i} tag preview`}
+                        label={tag}
+                        height={12}
+                        customMargin={5}
+                        fontSize={12}
+                        tag
+                      />
+                    )
+                  })}
+                </TagsIndicators>
+              </OverlayClickable>
             </WrapperComp>
           )
         })}
@@ -54,11 +88,18 @@ const CssComponentContainer = () => {
   )
 }
 
+const TagsIndicators = styled.div`
+  position: relative;
+  transition: all 300ms ease-in-out;
+  opacity: 0;
+  z-index: 1;
+`
+
 const loaderRotation = keyframes`
-  0%{
+  0% {
     transform: translateX(-50%) translateY(-50%) scale(0.3) rotate(0deg);
   }
-  100%{
+  100% {
     transform: translateX(-50%) translateY(-50%) scale(0.3) rotate(360deg);
   }
 `
@@ -84,7 +125,12 @@ const OverlayClickable = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  z-index: 2;
+  z-index: 5;
+  &:hover {
+    div {
+      opacity: ${(props) => props?.canDisplayedTags && 1};
+    }
+  }
 `
 
 const IFrame = styled.iframe`
@@ -110,9 +156,10 @@ const WrapperComp = styled.div`
   border-radius: 5px;
   overflow: hidden;
   transition: all 300ms ease-in-out;
+
   &:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.02);
     will-change: transform;
     transform-style: preserve-3d;
   }

@@ -5,22 +5,54 @@ import TagContainer from '../components/TagContainer'
 import CssComponentContainer from '../components/CssComponentContainer'
 import colors from '../utils/colors'
 
-export const Home = () => (
-  <WrapperPage>
-    <WrapperLogo>
-      <LogoApp src="/assets/app/logo.png" alt="logo app" />
-    </WrapperLogo>
-    <HomeContent>
-      <TagContainer>
-        <Tag label="Culture" />
-        <Tag label="Culture" />
-        <Tag label="Culture" />
-        <Tag label="Culture" />
-      </TagContainer>
-      <CssComponentContainer />
-    </HomeContent>
-  </WrapperPage>
-)
+const cssComponents = require('../master.json')
+
+export const Home = () => {
+  const cssElements = Object.values(cssComponents || {})
+  const [categories, setCategories] = React.useState([])
+  const [selectedCategories, setSelectedCategories] = React.useState([])
+
+  React.useEffect(() => {
+    const flatCategories = cssElements.map((v) => v?.category)
+    setCategories(flatCategories)
+  }, [])
+
+  const handleCategory = (event, category) => {
+    event.preventDefault()
+    if (!selectedCategories.includes(category)) {
+      setSelectedCategories((e) => [...e, category])
+    } else {
+      const categoriesSelectedCopy = [...selectedCategories].filter(
+        (v) => v !== category
+      )
+      setSelectedCategories(categoriesSelectedCopy)
+    }
+  }
+
+  return (
+    <WrapperPage>
+      <WrapperLogo>
+        <LogoApp src="/assets/app/logo.png" alt="logo app" />
+      </WrapperLogo>
+      <HomeContent>
+        <TagContainer>
+          {categories.map((category, index) => (
+            <Tag
+              key={`${index} category`}
+              label={category}
+              onClick={(event) => handleCategory(event, category)}
+              active={selectedCategories.includes(category)}
+            />
+          ))}
+        </TagContainer>
+        <CssComponentContainer
+          selectedCategories={selectedCategories}
+          comps={cssElements}
+        />
+      </HomeContent>
+    </WrapperPage>
+  )
+}
 
 export const WrapperPage = styled.div`
   position: absolute;

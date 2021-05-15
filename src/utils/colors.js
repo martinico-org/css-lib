@@ -5,6 +5,7 @@ const colors = {
   grey: '#DCDCDC',
   greySuperLight: 'rgba(220, 220, 220, 0.2)',
   green: '#03fc88',
+  greenPalo: '#8de858',
   red: '#fc034a',
   purpleBlue: 'rgba(70, 50, 168)',
 }
