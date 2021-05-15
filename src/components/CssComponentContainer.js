@@ -23,7 +23,7 @@ const CssComponentContainer = () => {
       {!!height &&
         components.map((comp, index) => {
           const size = height / 4
-          const scaleValue = (size / 1920).toFixed(2)
+          const scaleValue = size / 1920
           const compLoaded = cssCompsLoads.includes(comp?.id)
           return (
             <WrapperComp
@@ -90,7 +90,6 @@ const IFrame = styled.iframe`
   opacity: ${(props) => (props?.displayed ? 1 : 0)};
   top: 0;
   left: 0;
-  border-radius: 5px;
   width: 1920px;
   height: 1080px;
   transform-origin: top left;
@@ -106,8 +105,8 @@ const WrapperComp = styled.div`
   height: ${(props) => `${props.size / 1.7777778}px`};
   background-color: ${(props) =>
     props?.load ? 'transparent' : colors.greySuperLight};
-  overflow: hidden;
   border-radius: 5px;
+  overflow: hidden;
   transition: all 300ms ease-in-out;
   &:hover {
     cursor: pointer;
