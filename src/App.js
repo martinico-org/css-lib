@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router } from '@reach/router'
 import { Home } from './pages/Home'
-import { Project } from './pages/Project'
+import Project from './pages/Project'
 
 const App = () => (
   <Router>

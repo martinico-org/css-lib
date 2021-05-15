@@ -1,4 +1,4 @@
-import { master } from '../cssfiles/master'
+import { master } from '../cssfiles/master.json'
 
 export const getItems = async (id) => {
   console.log('COUCOU')

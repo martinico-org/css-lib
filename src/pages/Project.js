@@ -1,37 +1,44 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Global, css } from '@emotion/core'
+import { Global, css as emotionCss } from '@emotion/core'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import beautify from 'js-beautify'
 import parse from 'html-react-parser'
-import { master } from '../cssfiles/master'
+import Toggle from '../components/Toggle'
 
-export const Project = ({ id }) => {
+const master = require('../cssfiles/master.json')
+
+const Project = ({ id }) => {
   const [toggle, setToggle] = React.useState(true)
   const [lines, setLines] = React.useState(false)
-  const object = Object.values(master[id])
-  const cssString = object[0].css
-  const htmlString = object[0].html
-  const parsed = parse(htmlString)
+  const { html, css } = master[id]
+  const htmlParsed = parse(html)
+
+  const handleToggle = () => {
+    setToggle((e) => !e)
+  }
 
   return (
     <WrapperPage>
       <Global
-        styles={css`
-          ${cssString}
+        styles={emotionCss`
+          ${css}
         `}
       />
-
       <WrapperElement>
-        <WrapperAnim>{parsed}</WrapperAnim>
+        <WrapperAnim>{htmlParsed}</WrapperAnim>
       </WrapperElement>
-
       <WrapperElement>
         <WrapperSyntax>
-          <ButtonToggle onClick={() => setToggle((e) => !e)}>
-            TOGGLE
-          </ButtonToggle>
+          <WrapperToggle>
+            <Toggle
+              labels={['HTML', 'CSS']}
+              onClick={handleToggle}
+              toggleValue={toggle}
+            />
+          </WrapperToggle>
+
           <ButtonLines onClick={() => setLines((e) => !e)}>LINES</ButtonLines>
           {toggle ? (
             <SyntaxHighlighter
@@ -41,7 +48,7 @@ export const Project = ({ id }) => {
               style={vscDarkPlus}
               customStyle={{ margin: 0 }}
             >
-              {beautify.html(htmlString, {
+              {beautify.html(html, {
                 end_with_newline: true,
               })}
             </SyntaxHighlighter>
@@ -53,7 +60,7 @@ export const Project = ({ id }) => {
               showLineNumbers={lines}
               customStyle={{ margin: 0 }}
             >
-              {beautify.css(cssString, {
+              {beautify.css(css, {
                 end_with_newline: true,
               })}
             </SyntaxHighlighter>
@@ -63,6 +70,12 @@ export const Project = ({ id }) => {
     </WrapperPage>
   )
 }
+
+const WrapperToggle = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+`
 
 export const WrapperPage = styled.div`
   position: absolute;
@@ -107,3 +120,5 @@ export const ButtonLines = styled.button`
   top: 50px;
   right: 20px;
 `
+
+export default Project
