@@ -1,10 +1,15 @@
-from os import listdir
-from os.path import isfile, isdir, join
+from utils import get_sorted_dirs
 import pathlib
 
 current_dir = pathlib.Path(__file__).parent.absolute()
 cssfiles_dir = '{}/{}'.format(current_dir, '../cssfiles')
-print('Listing all folders of folder cssfiles')
-projects = [d for d in listdir(cssfiles_dir) if isdir(join(cssfiles_dir, d))]
 
-print(projects)
+print('Listing all folders of folder cssfiles')
+projects = get_sorted_dirs(cssfiles_dir)
+
+dict = {}
+dicts = []
+for project in projects:
+    print(project)
+
+
