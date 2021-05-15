@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 const Switch = () => {
   console.log('switch')
-  return <WrapperSwitch></WrapperSwitch>
+  return <WrapperSwitch>Hey</WrapperSwitch>
 }
 
 const WrapperSwitch = styled.div``
