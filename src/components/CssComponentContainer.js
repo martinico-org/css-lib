@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { navigate } from '@reach/router'
 import colors from '../utils/colors'
 import useScreenDimensions from '../hooks/useScreenDimensions'
+import URL from '../utils/const'
 
 const cssComponents = require('../master.json')
 
@@ -23,7 +24,7 @@ const CssComponentContainer = () => {
                 frameBorder={0}
                 size={size}
                 scaleValue={scaleValue}
-                src={`http://localhost:3000/${comp?.id}?fullscreen=true`}
+                src={`${URL}/${comp?.id}?fullscreen=true`}
               />
               <OverlayClickable onClick={() => navigate(`/${comp?.id}`)} />
             </WrapperComp>
