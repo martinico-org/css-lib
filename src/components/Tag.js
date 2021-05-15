@@ -5,7 +5,7 @@ import colors from '../utils/colors'
 const Tag = ({ label, onClick }) => (
   <WrapperTag onClick={onClick}>
     <TagContent>
-      <TagLogo src="assets/app/tag.svg" alt="Tag logo" />
+      <TagLogo src="/assets/app/tag.svg" alt="Tag logo" />
       <Label>{label}</Label>
     </TagContent>
   </WrapperTag>

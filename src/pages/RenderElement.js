@@ -33,7 +33,7 @@ const RenderElement = ({ id }) => {
       {!fullScreen && (
         <WrapperToggle top={25} left={25}>
           <BackButton
-            src="./assets/app/arrow.svg"
+            src="/assets/app/arrow.svg"
             alt="back button"
             onClick={() => navigate(`/`)}
           />
@@ -42,9 +42,9 @@ const RenderElement = ({ id }) => {
       {inApp && (
         <WrapperToggle top={25} right={25}>
           <CloseButton
-            src="./assets/app/close.svg"
+            src="/assets/app/close.svg"
             alt="back button"
-            onClick={() => navigate(`${id}`)}
+            onClick={() => navigate(`/viewer/${id}`)}
           />
         </WrapperToggle>
       )}
@@ -58,9 +58,11 @@ const RenderElement = ({ id }) => {
         {!fullScreen && (
           <WrapperToggle bottom={20} right={20}>
             <FullscreenButton
-              src="./assets/app/fullscreen.svg"
+              src="/assets/app/fullscreen.svg"
               alt="fullscreen"
-              onClick={() => navigate(`${id}?fullscreen=true&inApp=true`)}
+              onClick={() =>
+                navigate(`/viewer/${id}?fullscreen=true&inApp=true`)
+              }
             />
           </WrapperToggle>
         )}

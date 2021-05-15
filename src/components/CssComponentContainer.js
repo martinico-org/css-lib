@@ -32,7 +32,7 @@ const CssComponentContainer = () => {
               size={height / 4}
             >
               {!compLoaded && (
-                <CompLoader src="./assets/app/loader.svg" alt="loader comp" />
+                <CompLoader src="/assets/app/loader.svg" alt="loader comp" />
               )}
               <IFrame
                 title="css comp"
@@ -42,9 +42,11 @@ const CssComponentContainer = () => {
                 onLoad={(e) => handleOnLoad(e, comp?.id)}
                 size={size}
                 scaleValue={scaleValue}
-                src={`${URL}/${comp?.id}?fullscreen=true`}
+                src={`${URL}/viewer/${comp?.id}?fullscreen=true`}
               />
-              <OverlayClickable onClick={() => navigate(`/${comp?.id}`)} />
+              <OverlayClickable
+                onClick={() => navigate(`/viewer/${comp?.id}`)}
+              />
             </WrapperComp>
           )
         })}

@@ -8,7 +8,7 @@ import colors from '../utils/colors'
 export const Home = () => (
   <WrapperPage>
     <WrapperLogo>
-      <LogoApp src="assets/app/logo.png" alt="logo app" />
+      <LogoApp src="/assets/app/logo.png" alt="logo app" />
     </WrapperLogo>
     <HomeContent>
       <TagContainer>
