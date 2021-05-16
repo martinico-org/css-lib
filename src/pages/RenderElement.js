@@ -5,10 +5,9 @@ import parse from 'html-react-parser'
 import { navigate, useLocation } from '@reach/router'
 import { parse as queryParser } from 'query-string'
 import { NotAvailable } from './NotAvailable'
-import Toggle from '../components/Toggle'
-import Switch from '../components/Switch'
 import CodeRenderer from '../components/CodeRenderer'
 import useScreenDimensions from '../hooks/useScreenDimensions'
+import CodePreviewToggles from '../components/CodePreviewToggles'
 
 const cssComponents = require('../master.json')
 
@@ -98,7 +97,7 @@ const RenderElement = ({ id }) => {
               {content.htmlParsed}
             </WrapperAnim>
             {!fullScreen && (
-              <WrapperToggle bottom={20} right={20} displayed>
+              <WrapperToggle bottom={20} right={mobile ? 30 : 20} displayed>
                 <FullscreenButton
                   src="/assets/app/fullscreen.svg"
                   alt="fullscreen"
@@ -111,48 +110,17 @@ const RenderElement = ({ id }) => {
           </WrapperElement>
           {!fullScreen && (
             <WrapperElement mobile={mobile}>
+              <CodePreviewToggles
+                linesSwitch={linesSwitch}
+                toggle={toggle}
+                displayedTogglesAction={displayedTogglesAction}
+                displayedCopyIndicator={displayedCopyIndicator}
+                handleCopyCode={handleCopyCode}
+                handleSwitch={handleSwitch}
+                handleToggle={handleToggle}
+              />
               <WrapperSyntax mobile={mobile}>
                 {mobile && <OverlayClickable onClick={handleTogglesAction} />}
-                <WrapperToggle
-                  top={20}
-                  right={mobile ? 15 : 40}
-                  displayed={displayedTogglesAction}
-                >
-                  <Toggle
-                    labels={['HTML', 'CSS']}
-                    onClick={handleToggle}
-                    toggleValue={toggle}
-                  />
-                </WrapperToggle>
-                <WrapperToggle
-                  top={70}
-                  right={mobile ? 15 : 40}
-                  displayed={displayedTogglesAction}
-                >
-                  <Switch
-                    onClick={handleSwitch}
-                    switchValue={linesSwitch}
-                    label="Lines"
-                  />
-                </WrapperToggle>
-                <WrapperToggle
-                  top={120}
-                  right={mobile ? 15 : 40}
-                  displayed={displayedTogglesAction}
-                >
-                  <WrapperButtonToCopy>
-                    <CheckIndicator
-                      displayed={displayedCopyIndicator}
-                      src="/assets/app/check.svg"
-                      alt="check 404"
-                    />
-                    <ButtonToCopy
-                      src="/assets/app/copy.svg"
-                      alt="copy button 404"
-                      onClick={handleCopyCode}
-                    />
-                  </WrapperButtonToCopy>
-                </WrapperToggle>
                 <CodeRenderer
                   html={content.html}
                   css={content.css}
@@ -169,30 +137,6 @@ const RenderElement = ({ id }) => {
     </>
   )
 }
-
-const CheckIndicator = styled.img`
-  position: absolute;
-  top: 50%;
-  left: -30px;
-  width: 20px;
-  height: 20px;
-  transition: all 300ms ease-out;
-  transform: translateY(-50%);
-  opacity: ${(props) => (props?.displayed ? 1 : 0)};
-`
-
-const WrapperButtonToCopy = styled.div`
-  position: relative;
-`
-
-const ButtonToCopy = styled.img`
-  width: 30px;
-  height: 30px;
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-`
 
 const OverlayClickable = styled.div`
   position: absolute;
@@ -235,9 +179,9 @@ const CloseButton = styled.img`
 `
 
 const WrapperToggle = styled.div`
+  position: absolute;
   display: ${(props) => (props?.displayed ? 'unset' : 'none')};
   transition: all 300ms ease-in-out;
-  position: absolute;
   top: ${(props) => (props.bottom ? 'unset' : `${props.top}px`)};
   bottom: ${(props) => (props.top ? 'unset' : `${props.bottom}px`)};
   right: ${(props) => (props.left ? 'unset' : `${props.right}px`)};

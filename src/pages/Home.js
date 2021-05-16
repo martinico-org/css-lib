@@ -52,6 +52,7 @@ export const Home = () => {
               label={category}
               onClick={(event) => handleCategory(event, category)}
               active={selectedCategories.includes(category)}
+              customMargin={mobile ? '5px 15px' : '10px 15px'}
             />
           ))}
         </TagContainer>

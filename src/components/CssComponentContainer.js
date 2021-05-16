@@ -76,7 +76,7 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
                           key={`${i} tag preview`}
                           label={tag}
                           height={12}
-                          customMargin={5}
+                          customMargin="5px"
                           fontSize={12}
                           tag
                         />
