@@ -6,9 +6,10 @@ import colors from '../utils/colors'
 import useScreenDimensions from '../hooks/useScreenDimensions'
 import URL from '../utils/const'
 import Tag from './Tag'
+import toSentenceCase from '../utils/functions'
 
 const CssComponentContainer = ({ comps, selectedCategories }) => {
-  const { width } = useScreenDimensions()
+  const { width, mobile } = useScreenDimensions()
   const [cssCompsLoads, setCssCompsLoads] = React.useState([])
 
   const handleOnLoad = (event, id) => {
@@ -20,7 +21,7 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
     if (!selectedCategories.length) return
     const newCssCompsLoads = comps.reduce(
       (acc, v) => {
-        if (!selectedCategories.includes(v?.category)) {
+        if (!selectedCategories.includes(toSentenceCase(v?.category))) {
           acc = [...acc].filter((e) => e !== v?.id) // eslint-disable-line no-param-reassign
         }
         return acc
@@ -36,17 +37,18 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
         comps.map((comp, index) => {
           if (
             selectedCategories.length &&
-            !selectedCategories.includes(comp.category)
+            !selectedCategories.includes(toSentenceCase(comp.category))
           )
             return null
-          const size = width / 4
+          const size = mobile ? width * 0.95 : width / 4.5
           const scaleValue = size / 1920
           const compLoaded = cssCompsLoads.includes(comp?.id)
           return (
             <WrapperComp
               key={`${index}CompCSS`}
               load={compLoaded}
-              size={width / 4}
+              size={size}
+              mobile={mobile}
             >
               {!compLoaded && (
                 <CompLoader src="/assets/app/loader.svg" alt="loader comp" />
@@ -64,6 +66,7 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
               <OverlayClickable
                 onClick={() => navigate(`/viewer/${comp?.id}`)}
                 canDisplayedTags={compLoaded}
+                mobile={mobile}
               >
                 <TagsIndicators displayed={compLoaded}>
                   {comp.tags.map((tag, i) => {
@@ -126,6 +129,9 @@ const OverlayClickable = styled.div`
   height: 100%;
   border-radius: 5px;
   z-index: 5;
+  div {
+    opacity: ${(props) => props?.mobile && 1};
+  }
   &:hover {
     div {
       opacity: ${(props) => props?.canDisplayedTags && 1};
@@ -156,7 +162,7 @@ const WrapperComp = styled.div`
   border-radius: 5px;
   overflow: hidden;
   transition: all 300ms ease-in-out;
-
+  margin: ${(props) => (props?.mobile ? '15px' : '15px 0')};
   &:hover {
     cursor: pointer;
     transform: scale(1.02);

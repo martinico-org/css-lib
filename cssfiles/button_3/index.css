@@ -10,8 +10,7 @@
 #animation {
   width: 150px;
   height: 150px;
-  background-color: darkcyan;
-  border-radius: 50%;
+  background-color: beige;
   animation: bounce 1s infinite ease-in-out;
 }
 

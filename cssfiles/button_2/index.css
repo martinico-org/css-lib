@@ -8,9 +8,9 @@
 }
 
 #animation {
-  width: 150px;
+  width: 80px;
   height: 150px;
-  background-color: darkcyan;
+  background-color: brown;
   border-radius: 50%;
   animation: bounce 1s infinite ease-in-out;
 }

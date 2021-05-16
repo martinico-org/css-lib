@@ -8,11 +8,13 @@ import { NotAvailable } from './NotAvailable'
 import Toggle from '../components/Toggle'
 import Switch from '../components/Switch'
 import CodeRenderer from '../components/CodeRenderer'
+import useScreenDimensions from '../hooks/useScreenDimensions'
 
 const cssComponents = require('../master.json')
 
 const RenderElement = ({ id }) => {
   const location = useLocation()
+  const { mobile } = useScreenDimensions()
   const searchParams = queryParser(location.search)
   const fullScreen = searchParams?.fullscreen || null
   const inApp = searchParams?.inApp || null
@@ -45,7 +47,7 @@ const RenderElement = ({ id }) => {
   return (
     <>
       {content.html ? (
-        <WrapperPage>
+        <WrapperPage mobile={mobile}>
           {!fullScreen && (
             <WrapperToggle top={25} left={25}>
               <BackButton
@@ -69,8 +71,8 @@ const RenderElement = ({ id }) => {
           ${content.css}
         `}
           />
-          <WrapperElement fullScreen={fullScreen}>
-            <WrapperAnim fullScreen={fullScreen}>
+          <WrapperElement fullScreen={fullScreen} mobile={mobile}>
+            <WrapperAnim fullScreen={fullScreen} mobile={mobile}>
               {content.htmlParsed}
             </WrapperAnim>
             {!fullScreen && (
@@ -86,8 +88,8 @@ const RenderElement = ({ id }) => {
             )}
           </WrapperElement>
           {!fullScreen && (
-            <WrapperElement>
-              <WrapperSyntax>
+            <WrapperElement mobile={mobile}>
+              <WrapperSyntax mobile={mobile}>
                 <WrapperToggle top={20} right={40}>
                   <Toggle
                     labels={['HTML', 'CSS']}
@@ -166,26 +168,36 @@ const WrapperPage = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: ${(props) => (props?.mobile ? 'column' : 'row')};
 `
 
 const WrapperElement = styled.div`
   position: relative;
-  width: ${(props) => (props?.fullScreen ? '100%' : '50%')};
-  height: 100%;
+  width: ${(props) => (props?.fullScreen || props?.mobile ? '100%' : '50%')};
+  height: ${(props) => (props?.mobile && !props?.fullScreen ? '50%' : '100%')};
   display: flex;
   flex-direction: column;
 `
 
+/* eslint-disable */
+
 const WrapperAnim = styled.div`
-  margin: ${(props) => (props?.fullScreen ? '0' : '10px 5px 10px 10px')};
+  margin: ${(props) =>
+    props?.mobile && !props?.fullScreen
+      ? '10px 10px 5px 10px'
+      : props?.fullScreen
+      ? '0'
+      : '10px 5px 10px 10px'};
   height: 100%;
   border-radius: ${(props) => (props?.fullScreen ? '0' : '5px')};
   overflow: hidden;
 `
 
+/* eslint-enable */
+
 const WrapperSyntax = styled.div`
-  margin: 10px 10px 10px 5px;
+  margin: ${(props) =>
+    props?.mobile ? '5px 10px 10px 10px' : '10px 10px 10px 5px'};
   height: 100%;
   overflow-y: scroll;
   border-radius: 5px;

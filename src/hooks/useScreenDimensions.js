@@ -4,7 +4,7 @@ export const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = React.useState({
     width: window.innerWidth,
     height: window.innerHeight,
-    mobile: 0,
+    mobile: window.innerWidth < 800,
   })
 
   const handleResize = () => {
