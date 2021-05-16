@@ -63,27 +63,28 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
                 scaleValue={scaleValue}
                 src={`${URL}/viewer/${comp?.id}?fullscreen=true`}
               />
-              <OverlayClickable
-                onClick={() => navigate(`/viewer/${comp?.id}`)}
-                canDisplayedTags={compLoaded}
-                mobile={mobile}
-              >
-                <TagsIndicators displayed={compLoaded}>
-                  {comp.tags.map((tag, i) => {
-                    if (i >= 4) return null
-                    return (
-                      <Tag
-                        key={`${i} tag preview`}
-                        label={tag}
-                        height={12}
-                        customMargin={5}
-                        fontSize={12}
-                        tag
-                      />
-                    )
-                  })}
-                </TagsIndicators>
-              </OverlayClickable>
+              <Overlay canDisplayedTags={compLoaded} mobile={mobile}>
+                <WrapperTags>
+                  <OverlayClickable
+                    onClick={() => navigate(`/viewer/${comp?.id}`)}
+                  />
+                  <TagsIndicators displayed={compLoaded}>
+                    {comp.tags.map((tag, i) => {
+                      if (i >= 4) return null
+                      return (
+                        <Tag
+                          key={`${i} tag preview`}
+                          label={tag}
+                          height={12}
+                          customMargin={5}
+                          fontSize={12}
+                          tag
+                        />
+                      )
+                    })}
+                  </TagsIndicators>
+                </WrapperTags>
+              </Overlay>
             </WrapperComp>
           )
         })}
@@ -91,11 +92,27 @@ const CssComponentContainer = ({ comps, selectedCategories }) => {
   )
 }
 
+const OverlayClickable = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`
+
+const WrapperTags = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`
+
 const TagsIndicators = styled.div`
   position: relative;
   transition: all 300ms ease-in-out;
   opacity: 0;
-  z-index: 1;
+  z-index: 2;
+  user-select: none;
 `
 
 const loaderRotation = keyframes`
@@ -121,7 +138,7 @@ const CompLoader = styled.img`
   animation: ${loaderRotation} 2500ms linear infinite;
 `
 
-const OverlayClickable = styled.div`
+const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;

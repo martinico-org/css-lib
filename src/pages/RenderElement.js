@@ -20,6 +20,10 @@ const RenderElement = ({ id }) => {
   const inApp = searchParams?.inApp || null
   const [toggle, setToggle] = React.useState(true)
   const [linesSwitch, setLinesSwitch] = React.useState(false)
+  const [displayedCopyIndicator, setDisplayedCopyIndicator] =
+    React.useState(false)
+  const [displayedTogglesAction, setDisplayedTogglesAction] =
+    React.useState(true)
   const [content, setContent] = React.useState({
     html: null,
     css: null,
@@ -44,12 +48,30 @@ const RenderElement = ({ id }) => {
     }
   }, [])
 
+  React.useEffect(() => {
+    if (!mobile && !displayedTogglesAction) {
+      setDisplayedTogglesAction(true)
+    }
+  }, [mobile])
+
+  const handleTogglesAction = () => {
+    if (!mobile) return
+    setDisplayedTogglesAction((e) => !e)
+  }
+
+  const handleCopyCode = async () => {
+    setDisplayedCopyIndicator(true)
+    await navigator.clipboard
+      .writeText(toggle ? content.html : content.css)
+      .then(() => setTimeout(() => setDisplayedCopyIndicator(false), 600))
+  }
+
   return (
     <>
       {content.html ? (
         <WrapperPage mobile={mobile}>
           {!fullScreen && (
-            <WrapperToggle top={25} left={25}>
+            <WrapperToggle top={25} left={25} displayed>
               <BackButton
                 src="/assets/app/arrow.svg"
                 alt="back button"
@@ -58,7 +80,7 @@ const RenderElement = ({ id }) => {
             </WrapperToggle>
           )}
           {inApp && (
-            <WrapperToggle top={25} right={25}>
+            <WrapperToggle top={25} right={25} displayed>
               <CloseButton
                 src="/assets/app/close.svg"
                 alt="back button"
@@ -76,7 +98,7 @@ const RenderElement = ({ id }) => {
               {content.htmlParsed}
             </WrapperAnim>
             {!fullScreen && (
-              <WrapperToggle bottom={20} right={20}>
+              <WrapperToggle bottom={20} right={20} displayed>
                 <FullscreenButton
                   src="/assets/app/fullscreen.svg"
                   alt="fullscreen"
@@ -90,19 +112,46 @@ const RenderElement = ({ id }) => {
           {!fullScreen && (
             <WrapperElement mobile={mobile}>
               <WrapperSyntax mobile={mobile}>
-                <WrapperToggle top={20} right={40}>
+                {mobile && <OverlayClickable onClick={handleTogglesAction} />}
+                <WrapperToggle
+                  top={20}
+                  right={mobile ? 15 : 40}
+                  displayed={displayedTogglesAction}
+                >
                   <Toggle
                     labels={['HTML', 'CSS']}
                     onClick={handleToggle}
                     toggleValue={toggle}
                   />
                 </WrapperToggle>
-                <WrapperToggle top={70} right={40}>
+                <WrapperToggle
+                  top={70}
+                  right={mobile ? 15 : 40}
+                  displayed={displayedTogglesAction}
+                >
                   <Switch
                     onClick={handleSwitch}
                     switchValue={linesSwitch}
                     label="Lines"
                   />
+                </WrapperToggle>
+                <WrapperToggle
+                  top={120}
+                  right={mobile ? 15 : 40}
+                  displayed={displayedTogglesAction}
+                >
+                  <WrapperButtonToCopy>
+                    <CheckIndicator
+                      displayed={displayedCopyIndicator}
+                      src="/assets/app/check.svg"
+                      alt="check 404"
+                    />
+                    <ButtonToCopy
+                      src="/assets/app/copy.svg"
+                      alt="copy button 404"
+                      onClick={handleCopyCode}
+                    />
+                  </WrapperButtonToCopy>
                 </WrapperToggle>
                 <CodeRenderer
                   html={content.html}
@@ -120,6 +169,39 @@ const RenderElement = ({ id }) => {
     </>
   )
 }
+
+const CheckIndicator = styled.img`
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  width: 20px;
+  height: 20px;
+  transition: all 300ms ease-out;
+  transform: translateY(-50%);
+  opacity: ${(props) => (props?.displayed ? 1 : 0)};
+`
+
+const WrapperButtonToCopy = styled.div`
+  position: relative;
+`
+
+const ButtonToCopy = styled.img`
+  width: 30px;
+  height: 30px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`
+
+const OverlayClickable = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+`
 
 const FullscreenButton = styled.img`
   width: 30px;
@@ -153,12 +235,14 @@ const CloseButton = styled.img`
 `
 
 const WrapperToggle = styled.div`
+  display: ${(props) => (props?.displayed ? 'unset' : 'none')};
+  transition: all 300ms ease-in-out;
   position: absolute;
   top: ${(props) => (props.bottom ? 'unset' : `${props.top}px`)};
   bottom: ${(props) => (props.top ? 'unset' : `${props.bottom}px`)};
   right: ${(props) => (props.left ? 'unset' : `${props.right}px`)};
   left: ${(props) => (props.right ? 'unset' : `${props.left}px`)};
-  z-index: 1;
+  z-index: 2;
 `
 
 const WrapperPage = styled.div`
@@ -196,6 +280,7 @@ const WrapperAnim = styled.div`
 /* eslint-enable */
 
 const WrapperSyntax = styled.div`
+  position: relative;
   margin: ${(props) =>
     props?.mobile ? '5px 10px 10px 10px' : '10px 10px 10px 5px'};
   height: 100%;
