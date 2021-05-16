@@ -44,7 +44,7 @@ const TagContent = styled.div`
   padding: 5px 10px;
   transition: all 300ms ease-in-out;
   background-color: ${(props) =>
-    props?.active ? colors.purpleBlue : colors.grey};
+    props?.active ? colors.greenPalo : colors.grey};
   height: ${(props) => (props?.height ? `${props?.height}px` : '25px')};
   display: flex;
   flex-direction: row;
