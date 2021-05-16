@@ -31,9 +31,10 @@ export const Home = () => {
 
   return (
     <WrapperPage>
-      <WrapperLogo>
-        <LogoApp src="/assets/app/logo.png" alt="logo app" />
-      </WrapperLogo>
+      <Header>
+        <PalmTree src="/assets/app/palmtree.svg" alt="404 palmtree" />
+        <Title>CSS Lib</Title>
+      </Header>
       <HomeContent>
         <TagContainer>
           {categories.map((category, index) => (
@@ -62,25 +63,30 @@ export const WrapperPage = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${colors.purpleBlue};
-`
-
-const WrapperLogo = styled.div`
-  display: flex;
-  width: 100%;
-  height: 15%;
-  justify-content: center;
-  align-items: center;
+  background-color: ${colors.greySuperLight};
 `
 
 const HomeContent = styled.div`
   width: 100%;
-  height: 85%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `
 
-const LogoApp = styled.img`
-  height: 90%;
-  object-fit: contain;
+const Title = styled.div`
+  color: ${colors.classicBlack};
+  font-size: 50px;
+  text-align: center;
+`
+
+const PalmTree = styled.img`
+  height: 70px;
+`
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  padding: 10px;
 `

@@ -11,6 +11,7 @@ const WrapperTagContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 10px;
 `
 
 export default TagContainer
